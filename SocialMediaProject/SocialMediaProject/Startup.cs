@@ -26,6 +26,7 @@ namespace SocialMediaProject
                 options.UseSqlServer(_configuration.GetConnectionString("ConnectionToSocialMediaProjectDb")); //ConnectionToSocialMediaProjectDb -> comes from the file appsetting.json
             });
             services.AddControllers();
+            services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SocialMediaProject", Version = "v1" });
@@ -45,6 +46,8 @@ namespace SocialMediaProject
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));//Allows CORS
 
             app.UseAuthorization();
 
